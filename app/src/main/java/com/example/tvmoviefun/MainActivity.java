@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import java.util.List;
@@ -19,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean isFetchingMovies;
     private int currentPage = 1;
+    private String sortBy = MoviesRepository.POPULAR;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +37,30 @@ public class MainActivity extends AppCompatActivity {
         setUpScrollListener();
 
         getGenres();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_movies, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.sort:
+                showSortMenu();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void showSortMenu() {
+        PopupMenu sortMenu = new PopupMenu(this, findViewById(R.id.sort));
+        sortMenu.inflate(R.menu.menu_movies_sort);
+        sortMenu.show();
+
     }
 
     private void setUpScrollListener() {
@@ -71,14 +99,17 @@ public class MainActivity extends AppCompatActivity {
 
     private void getMovies(int page) {
         isFetchingMovies = true;
-        moviesRepository.getMovies(new OnGetMoviesCallback() {
+        moviesRepository.getMovies(page, sortBy, new OnGetMoviesCallback() {
             @Override
             public void onSuccess(int page, List<Movie> movies) {
-                Log.d("MoviesRepository", "Current Page = " + page);
+//                Log.d("MoviesRepository", "Current Page = " + page);
                 if (adapter == null) {
                     adapter = new MoviesAdapter(movies, movieGenres);
                     moviesList.setAdapter(adapter);
                 } else {
+                    if (page == 1) {
+                        adapter.clearMovies();
+                    }
                     adapter.appendMovies(movies);
                 }
                 currentPage = page;
