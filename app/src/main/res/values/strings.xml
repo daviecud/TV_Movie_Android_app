@@ -1,6 +1,12 @@
 <resources>
-    <string name="app_name">TV &amp; Movie fun</string>
+    <string name="app_name">KJ Movie Fun</string>
     <string name="popular">Popular</string>
     <string name="top_rated">Top Rated</string>
     <string name="upcoming">Popular</string>
+    <string name="release">2019</string>
+    <string name="title">Movie Title</string>
+    <string name="genre">Comedy, Action</string>
+    <string name="rating">8.7</string>
+    <string name="poster">poster</string>
+
 </resources>

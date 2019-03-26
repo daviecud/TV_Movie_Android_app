@@ -40,4 +40,11 @@ public interface TMDbApi {
             @Query("api_key") String apiKey,
             @Query("language") String language
     );
+
+    @GET("movie/{movie_id}/videos")
+    Call<TrailerResponse> getTrailers(
+            @Path("movie_id") int id,
+            @Query("api_key") String apiKey,
+            @Query("language") String language
+    );
 }

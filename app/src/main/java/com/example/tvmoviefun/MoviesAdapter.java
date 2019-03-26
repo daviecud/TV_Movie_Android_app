@@ -16,6 +16,8 @@ import java.util.List;
 
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewHolder> {
 
+    private String IMAGE_BASE_URL = "http://image.tmdb.org/t/p/w500";
+
     private List<Genre> allGenres;
     private List<Movie> movies;
     private OnMoviesClickCallback callback;
@@ -54,6 +56,8 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
     }
 
     class MovieViewHolder extends RecyclerView.ViewHolder {
+
+        private String IMAGE_BASE_URL = "http://image.tmdb.org/t/p/w500";
         TextView releaseDate;
         TextView title;
         TextView rating;
